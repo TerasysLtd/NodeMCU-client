@@ -1,0 +1,94 @@
+ESP8266 MAC address: 5c:cf:7f:c4:10:36
+Username : adedapopaul@yahoo.com
+Password : password
+
+
+Steps:
+1) Login and get the login token
+2) Use the login token for adding/registering the device into cloud
+3) Generate/Regenerate/get the key using login token
+4) Send the data using login token
+
+Login token will be expired in 10 min....
+
+Login:
+=======
+curl --request POST \
+  --url https://www.terasyshub.io/api/v1/login \
+  --header 'content-type: application/json' \
+  --data '{
+	"email":"adedapopaul@yahoo.com",
+	"pass":"password"
+}'
+Login Token:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NDUzYmIxNjdhNjAxNDE3ZWJmNmFlMyIsImlhdCI6MTQ5Nzg5NTg2NSwiZXhwIjoxNDk3ODk5NDY1fQ.T21qCY3bwNl2uDXHVD32pVN51TBI3yUysu890SJfZ2k
+
+
+Add the device:
+================
+curl --request POST \
+  --url https://www.terasyshub.io/api/v1/devices \
+  --header 'authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NDUzYmIxNjdhNjAxNDE3ZWJmNmFlMyIsImlhdCI6MTQ5Nzg5NTg2NSwiZXhwIjoxNDk3ODk5NDY1fQ.T21qCY3bwNl2uDXHVD32pVN51TBI3yUysu890SJfZ2k' \
+  --header 'content-type: application/json' \
+  --data '{
+	"mac" : "5c:cf:7f:c4:10:36",
+    "name" :"Paul NodeMCU Board",
+    "description" :"This is for test purpose",
+    "properties":{
+    	"color":"yellow"
+    },
+    "location":{},
+    "email":"adedapopaul@yahoo.com"
+}'
+
+
+
+Generate the KEY:
+==================
+curl --request POST \
+--url https://www.terasyshub.io/api/v1/keys/5c:cf:7f:c4:10:36 \
+--header 'authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NDUzYmIxNjdhNjAxNDE3ZWJmNmFlMyIsImlhdCI6MTQ5Nzg5NTg2NSwiZXhwIjoxNDk3ODk5NDY1fQ.T21qCY3bwNl2uDXHVD32pVN51TBI3yUysu890SJfZ2k'
+
+Get the KEY:
+============
+curl --request GET \
+--url https://www.terasyshub.io/api/v1/keys/5c:cf:7f:c4:10:36 \
+--header 'authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NDUzYmIxNjdhNjAxNDE3ZWJmNmFlMyIsImlhdCI6MTQ5Nzg5NTg2NSwiZXhwIjoxNDk3ODk5NDY1fQ.T21qCY3bwNl2uDXHVD32pVN51TBI3yUysu890SJfZ2k'
+
+Regenerate the KEY:
+====================
+curl --request POST \
+--url https://www.terasyshub.io/api/v1/keys/5c:cf:7f:c4:10:36/regen \
+--header 'authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NDUzYmIxNjdhNjAxNDE3ZWJmNmFlMyIsImlhdCI6MTQ5Nzg5NTg2NSwiZXhwIjoxNDk3ODk5NDY1fQ.T21qCY3bwNl2uDXHVD32pVN51TBI3yUysu890SJfZ2k'
+
+
+
+
+
+Sending out the data to cloud:
+==============================
+
+curl --request POST \
+  --url https://www.terasyshub.io/api/v1/data \
+  --header 'content-type: application/json' \
+  --data '{
+    "mac" : "5c:cf:7f:c4:10:36",
+    "metrics":[
+       {
+           "value" : 21,
+           "type" : "temperature",
+           "unit" : "fahrenheit"
+       },
+       {
+           "value" : 8.3,
+           "type" : "humidity",
+           "unit" : "%"
+       }
+    ],
+    "timestamp" : 1486547984,
+    "location" : {
+        "lat" : 12.0231,
+        "lon" : -1.1293
+    },
+    "key":"98f4f6409ae547223e4c"
+}'
