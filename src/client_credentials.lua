@@ -1,8 +1,9 @@
+-- _G.cjson = sjson
 
 local function create_json_cred ()
     local data = {}
     data.mac = wifi.sta.getmac()
-    return(cjson.encode(data))
+    return(sjson.encode(data))
 end
 
 local function prepare_post (server, url, json_s)
@@ -27,7 +28,7 @@ local function parse_response(response)
 end
 
 local function post_json_cred (server, url, json_s)
-    local sk = tls.createConnection(net.TCP, 1)
+    local sk = tls.createConnection(net.TCP,1)
     sk:on("connection", function(conn)
         print("--connected")
         local post_s = prepare_post(server, url, json_s)

@@ -7,8 +7,8 @@ end
 
 dofile("wifi_connect.lc")
 
--- every 5 minutes
-cron.schedule("*/5 * * * *", function(e)
+-- take measurement every 1 minutes
+cron.schedule("* * * * *", function(e)
   print("Cron running measurement.")
   local run = require("periodic_work")
   run.periodic()

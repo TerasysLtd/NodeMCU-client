@@ -1,3 +1,4 @@
+-- _G.cjson = sjson
 
 function create_json (value, unit, type, time, lat, lon)
     local data = {}
@@ -8,7 +9,7 @@ function create_json (value, unit, type, time, lat, lon)
         { value = value,  unit = unit, type = type }
         }
     data.key = mykey
-    return(cjson.encode(data))
+    return(sjson.encode(data))
 end
 
 local function prepare_post (server, url, json_s)
@@ -38,7 +39,7 @@ function post_json (server, send_table)
         print("No API key, will not send.")
         return
     end
-    if sk == nil then sk = tls.createConnection(net.TCP, 1) end
+    if sk == nil then sk = tls.createConnection(net.TCP,1) end
     sk:on("connection", function(conn)
         print("--connected")
         local url = send_table[1][1]
