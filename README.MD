@@ -2,7 +2,7 @@ NodeMCU Logger
 =====================================
 
 This is Lua code that runs on a NodeMCU and periodically reports
-reading from the connected sensor(s) to Terasys Hub server.
+reading from the connected sensor(s) to TerasysHUB  server.
 
 Needed hardware
 ---------------
